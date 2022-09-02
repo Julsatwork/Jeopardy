@@ -1,0 +1,91 @@
+async function getBooks() {
+    let response = await fetch('books.json')
+    let books = await response.json()
+    let n = 1
+    return books.map(book => {
+        book.id = n
+        n += 1
+        return book
+    })
+}
+
+function getBookHtml(book) {
+    return `<div class="my-book">
+        <div class="my-book-cover">${book.title}</div>
+        <div class="my-book-spine"></div>
+        <div class="my-book-footer"></div>
+    </div>`
+}
+
+function displayLibrary(books) {
+    document.body.innerHTML = `<div class="my-library">
+        ${books.map(getBookHtml).join('')}
+    </div>`
+}
+
+getBooks()
+    .then(displayLibrary)
+    .catch(e => console.log(e))
+
+CSS
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: lightyellow;
+    padding: 1rem;
+}
+
+.my-library {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(3, calc(100% / 3));
+}
+
+.my-book {
+    display: grid;
+    grid-template-columns: 1rem 7rem;
+    grid-template-areas: 
+        "spine cover"
+        "footer footer";
+}
+
+.my-book div {
+    border: 0.1rem solid black;
+}
+
+.my-book-cover {
+    grid-area: cover;
+    height: 7rem;
+    background-color: lightgreen;
+    text-align: center;
+    padding: 1rem;
+}
+
+.my-book-spine {
+    grid-area: spine;
+    background-color: #4A4238;
+    border-top-left-radius: 0.3rem;
+}
+
+.my-book-footer {
+    grid-area: footer;
+    padding: 0.2rem;
+    background-color: lightgray;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.my-book:nth-of-type(even) .my-book-cover {
+    background-color: lightblue;  
+}
+
+.my-book:nth-of-type(even) .my-book-spine {
+    background-color: #E1B07E;  
+}
+
+
+
+
+
+
+
+
