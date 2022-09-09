@@ -26,7 +26,6 @@ function displayLibrary(books) {
 getBooks()
     .then(displayLibrary)
     .catch(e => console.log(e))
-
 CSS
 html, body {
     margin: 0;
